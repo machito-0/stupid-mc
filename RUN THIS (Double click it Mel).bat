@@ -36,17 +36,23 @@ if not exist "%destinationDirectory%" (
     mkdir "%destinationDirectory%"
 )
 
-rem Move Mods folder if it exists
+rem Move all files in Mods folder to %APPDATA%\.minecraft\mods
 if exist "%sourceDirectory%\mods" (
-    move /Y "%sourceDirectory%\mods" "%destinationDirectory%\"
+    if not exist "%destinationDirectory%\mods" (
+        mkdir "%destinationDirectory%\mods"
+    )
+    xcopy /E /I "%sourceDirectory%\mods\*" "%destinationDirectory%\mods\"
     echo Mods folder moved successfully.
 ) else (
     echo Mods folder does not exist in source directory. Skipping...
 )
 
-rem Move Config folder if it exists
+rem Move all files and folders in Config folder to %APPDATA%\.minecraft\config
 if exist "%sourceDirectory%\config" (
-    move /Y "%sourceDirectory%\config" "%destinationDirectory%\"
+    if not exist "%destinationDirectory%\config" (
+        mkdir "%destinationDirectory%\config"
+    )
+    xcopy /E /I "%sourceDirectory%\config\*" "%destinationDirectory%\config\"
     echo Config folder moved successfully.
 ) else (
     echo Config folder does not exist in source directory. Skipping...
